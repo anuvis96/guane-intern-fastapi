@@ -10,5 +10,4 @@ class User(Model):
     email = fields.CharField(max_length=200, null=False, unique=True)
     password = fields.TextField(null=True)
     join_data = fields.DatetimeField(default=datetime.utcnow)
-    dog = fields.ForeignKeyField("models.Dog", related_name="dog")
     
