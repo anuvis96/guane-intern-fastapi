@@ -7,6 +7,6 @@ class Dog(Model):
         dog_name = fields.CharField(max_length=12, null=False, unique=True)
         picture = fields.CharField(
         max_length=200, null=False, default="picture_dog_1.jpg")
-        is_adopted = fields.BooleanField(null = True)
+        is_adopted = fields.BooleanField(null= False)
         create_date = fields.DatetimeField(default=datetime.utcnow)
         id_user = fields.ForeignKeyField("models.User", related_name="user")

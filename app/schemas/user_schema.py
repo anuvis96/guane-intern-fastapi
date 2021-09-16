@@ -2,18 +2,19 @@ from pydantic import BaseModel
 from datetime import datetime
 
 
-class InUser(BaseModel):  # Clase pydantic = convertida a python
+class In_User_Schema(BaseModel):
+                                   # Clase pydantic = convertida a python
     name: str
     last_name: str
     email: str
     password: str
     create_date: datetime
 
-    class Config:
-        orm_mode = True
-
-
-class OutUser(BaseModel):
+class Out_User_Schema(BaseModel):
+    id: int
     name: str
     last_name: str
     email: str
+
+    class Config:
+        orm_mode = True
