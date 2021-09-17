@@ -23,7 +23,7 @@ async def find_dog(dog_name: str):
     return dog
 
 
-@dog_router.get('/dogs/is_adopted', response_model=List[Dog_Schema], tags=["dogs"])
+@dog_router.get('/is_adopted', tags=["dogs"])
 async def find_dog_adopted():
     dog = await find_dog_by_adopted()
     return dog       
@@ -34,14 +34,12 @@ async def created_dog(dog_name : str):
     dog_data = await create_dog(dog_name = dog_name)
     return dog_data
 
-
 # comentar control k + control c
 
 @dog_router.put("/dogs/{dog_name}")
 async def updated_dog(dog_schema: Dog_Schema_Update, dog_name : str):
-    dog_data = await update_dog(dog_name = dog_name, dog_schema = dog_schema)
+    dog_data = await update_dog(dog_name=dog_name,dog_schema=dog_schema)
     return dog_data
-
 
 @dog_router.delete('/dogs/{dog_name}', status_code=status.HTTP_204_NO_CONTENT, tags=["dogs"])
 async def delete_dog(dog_name: str):

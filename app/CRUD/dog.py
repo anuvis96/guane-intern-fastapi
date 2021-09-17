@@ -1,6 +1,6 @@
 from typing import Dict, Any
 from app.models.dog import Dog
-from app.schemas.dog_schema import Dog_Schema, Dog_Schema_Update
+from app.schemas.dog_schema import Dog_Schema_Update
 from app.models.user import User
 import requests
 
@@ -41,10 +41,12 @@ def up_image():  # Consumir Api: una url de texto
 # Actualizar un dog existente por el nombre
 async def update_dog(dog_name: str, dog_schema: Dog_Schema_Update):
     image_dog = up_image()
-    dog_schema.picture = image_dog
-    dog_data_update = await Dog.get(dog_name = dog_name)
-    dog_schema.id = dog_data_update.id
-    dog_data_update = await Dog.filter(dog_name = dog_name).update(**dog_schema.dict())
+    dog_data = await Dog.get(dog_name= dog_name)
+    dog_data.picture = image_dog
+    dog_data.dog_name = dog_schema.dog_name
+    dog_data.is_adopted = dog_schema.is_adopted
+    dog_data.user_id = dog_schema.user
+    await dog_data.save()
     return True
 
 

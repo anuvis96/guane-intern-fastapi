@@ -7,19 +7,18 @@ class Dog_Schema(BaseModel):
     picture: str
     is_adopted: bool 
     create_date: datetime 
-    id_user : int
+    user : int
     
     class Config:
         orm_mode = True
 
 class Dog_Schema_Update(BaseModel): 
     ## Clase pydantic = convertida a python
-    id: int
     dog_name: str
     picture: str
     is_adopted: bool 
     create_date: datetime 
-    id_user : int
+    user : int
     
     class Config:
         orm_mode = True
