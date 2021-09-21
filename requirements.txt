@@ -17,4 +17,7 @@ typing-extensions==3.10.0.2
 uvicorn==0.15.0
 tortoise-orm
 requests
+asyncpg
+celery
+redis
 

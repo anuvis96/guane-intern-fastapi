@@ -9,7 +9,7 @@ user_router = APIRouter()
 
 
 @user_router.get('/users', tags=["users"])
-async def get_all_users():
+async def get_all_users_data():
     users = await get_all_users()
     return users
 
@@ -21,12 +21,10 @@ async def find_user(id: int):
 
 
 @user_router.post("/users")
-async def create_user(users: In_User_Schema):
+async def create_users(users: In_User_Schema):
     user_data = await create_user(users=users)
     return user_data
 
-
-# comentar control k + control c
 
 @user_router.put("/users/{id}", response_model=Out_User_Schema)
 async def update_users(id: str, user_schema: Out_User_Schema):

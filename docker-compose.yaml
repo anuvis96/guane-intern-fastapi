@@ -1,22 +1,45 @@
 version: "3.8"
 
-services: 
+services:
+  celery:
+    image: celery_task
+    build: .
+    command: celery -A celery worker -Q celery -c 1 -P prefork --loglevel=info
+    environment: 
+      - C_FORCE_ROOT=true
+    depends_on:
+      - guane_inter 
+      - rabbitmq 
+      - redis 
+  
   guane_inter:
     image: guane_intern_api
     build: ./
     environment: 
-      - DB_URL="postgres://postgres:postgres:5432/guane_intern_db"
+      - DB_URL=postgres://postgres:postgres@postgres:5432/guane_intern_db
     depends_on:
       - postgres 
     ports: 
       - "8001:8000"    
 
   postgres:
-    image: postgres
+    image: guane_db
+    build: 
+      context: ./DB
     environment:
-       - POSTGRES_DB=postgres
-       - POSTGRES_USER=postgres
-       - POSTGRES_PASSWORD=postgres
-    volumes:
-      - ./db/:/root/db/  
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+
+  rabbitmq:
+    image: rabbitmq:3-management
+    ports:
+     - 5671:5671
+     - 5672:5672
+     - 15671:15671
+     - 15672:15672
+    
+  redis:
+    image: redis:latest
+    ports:
+      - "6379:6379"    
 

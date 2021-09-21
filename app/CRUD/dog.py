@@ -40,7 +40,7 @@ def up_image():  # Consumir Api: una url de texto
 # Actualizar un dog existente por el nombre
 async def update_dog(dog_name: str, dog_schema: Dog_Schema_Update):
     image_dog = up_image()
-    dog_data = await Dog.get(dog_name= dog_name)
+    dog_data = await Dog.get(dog_name=dog_name)
     dog_data.picture = image_dog
     dog_data.dog_name = dog_schema.dog_name
     dog_data.is_adopted = dog_schema.is_adopted

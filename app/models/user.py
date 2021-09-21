@@ -9,4 +9,3 @@ class User(Model):
     email = fields.CharField(max_length=200, null=False)
     password = fields.CharField(max_length=8, null=True)
     create_date = fields.DatetimeField(default=datetime.utcnow)
-    
