@@ -1,4 +1,3 @@
-from typing import Dict, Any
 from app.models.dog import Dog
 from app.schemas.dog_schema import Dog_Schema_Update
 from app.models.user import User

@@ -3,7 +3,6 @@ from starlette import status
 from app.models.dog import Dog
 from app.schemas.dog_schema import Dog_Schema_Update, Dog_Schema
 from app.models.dog import Dog
-from typing import List
 from app.CRUD.dog import *
 from starlette.status import HTTP_204_NO_CONTENT
 
@@ -32,6 +31,7 @@ async def find_dog_adopted():
 @dog_router.post("/dogs/{dog_name}")
 async def created_dog(dog_name : str):
     dog_data = await create_dog(dog_name = dog_name)
+    ##res = create_order_dog('Admin Dog')
     return dog_data
 
 # comentar control k + control c
