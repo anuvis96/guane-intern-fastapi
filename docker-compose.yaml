@@ -17,10 +17,12 @@ services:
     build: ./
     environment: 
       - DB_URL=postgres://postgres:postgres@postgres:5432/guane_intern_db
+      - GUANE_INTERN_DATABASE_SERVICE=http://:port
     depends_on:
       - postgres 
     ports: 
-      - "8001:8000"    
+      - "8001:8000" 
+      - "10002:10002"   
 
   postgres:
     image: guane_db

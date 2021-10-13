@@ -2,12 +2,33 @@ from fastapi import APIRouter, status
 from starlette import status
 from app.schemas.user_schema import In_User_Schema, Out_User_Schema
 from app.models.user import User
-from app.CRUD.user import *
+from app.services.user import *
+from fastapi.responses import JSONResponse
 from starlette.status import HTTP_204_NO_CONTENT
+from app.services.user import user_service
 
 user_router = APIRouter()
 
 
+@user_router.get(
+    "/{id}",
+    response_class=JSONResponse,
+    response_model=User,
+    status_code=200,
+    responses={
+        200: {"description": "User found"},
+        401: {"description": "User unauthorized"},
+        404: {"description": "User not found"},
+    },
+)
+async def get_by_id(
+    *,
+    id: int,
+):
+    user = await user_service.get_by_id(id=id)
+    return user
+
+""" 
 @user_router.get('/users', tags=["users"])
 async def get_all_users_data():
     users = await get_all_users()
@@ -38,3 +59,4 @@ async def delete_user(id: int):
     if not user:
         raise "El Usuario con este Id no se encuentra."
     return f"El Usuario con el Id {id} se borro exitosamente."
+    """ 

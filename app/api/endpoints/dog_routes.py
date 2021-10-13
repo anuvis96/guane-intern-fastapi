@@ -3,7 +3,7 @@ from starlette import status
 from app.models.dog import Dog
 from app.schemas.dog_schema import Dog_Schema_Update, Dog_Schema
 from app.models.dog import Dog
-from app.CRUD.dog import *
+from app.services.dog import *
 from app.celery_worker import celery_task
 from starlette.status import HTTP_204_NO_CONTENT
 
@@ -11,12 +11,12 @@ from starlette.status import HTTP_204_NO_CONTENT
 dog_router = APIRouter()
 
 
-@dog_router.get('/dogs', tags=["dogs"])
+@dog_router.get('/dogs', tags=["dogs"])   ## crear el endpoint que conecte con el servicio 
 async def get_all_dog():
     dogs = await get_all_dogs()
     return dogs
 
-
+""" 
 @dog_router.get('/dogs/{dog_name}', tags=["dogs"])
 async def find_dog(dog_name: str):
     dog = await find_dog_by_name(dog_name=dog_name)
@@ -50,3 +50,4 @@ async def delete_dog(dog_name: str):
     if not dog:
         raise "El Dog con este Id no se encuentra."
     return f"El Dog con el Id {id} se borro exitosamente."
+"""

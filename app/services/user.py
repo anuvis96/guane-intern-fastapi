@@ -1,8 +1,29 @@
-from app.schemas.user_schema import In_User_Schema, Out_User_Schema
 from app.models.user import User
+from app.config import settings
+from app.infra.httpx.client import HTTPClient
+from app.infra.services.responses import Responses
+from app.schemas.user_schema import In_User_Schema, Out_User_Schema
 
 
-async def get_all_users():  # Obtener todos los usuarios
+
+class UserService:
+
+    # crear un servicio que se pegue al ms database utilizando httpxclient
+    def __init__(
+        self, *, client: HTTPClient = HTTPClient(), check_codes: Responses = Responses()
+    ):
+        self.__client = client
+        self.__check_codes = check_codes
+
+    async def get_by_id(self, *, id: int) -> User:
+        url = f"{settings.GUANE_INTERN_DATABASE_SERVICE}/api/users/{id}"
+        header = {"Content-Type": "application/json"}
+        response = await self.__client.get(url_service=url, headers=header, timeout=40)
+        await self.__check_codes.check_codes(response=response)
+        response = response.json()
+        return User(**response)
+    """
+ async def get_all_users():  # Obtener todos los usuarios
     users = await User.all()
     return users
 
@@ -37,3 +58,6 @@ async def delete_users_by_id(id: int):
     if not user:
         raise "El User con este Id no se encuentra."
     return f"El User con el Id {id} se borro exitosamente."
+"""
+
+user_service = UserService()
